@@ -17,3 +17,28 @@ class PaymentListAPIView(generics.ListAPIView):
     filter_backends = [DjangoFilterBackend, OrderingFilter]
     filterset_fields = ('course', 'lesson', 'payment_method',)
     ordering_fields = ('date_pay',)
+
+
+class UserCreateAPIView(generics.CreateAPIView):
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
+
+
+class UserListAPIView(generics.ListAPIView):
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
+
+
+class UserDetailAPIView(generics.RetrieveAPIView):
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
+
+
+class UserUpdateAPIView(generics.UpdateAPIView):
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
+
+
+class UserDeleteAPIView(generics.DestroyAPIView):
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
