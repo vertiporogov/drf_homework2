@@ -46,5 +46,5 @@ class UserUpdateAPIView(generics.UpdateAPIView):
 
 
 class UserDeleteAPIView(generics.DestroyAPIView):
-    serializer_class = UserSerializer
+    # serializer_class = UserSerializer
     queryset = User.objects.all()
