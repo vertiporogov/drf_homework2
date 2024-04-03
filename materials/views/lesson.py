@@ -2,6 +2,7 @@ from rest_framework.generics import CreateAPIView, ListAPIView, DestroyAPIView, 
 from rest_framework.permissions import IsAuthenticated
 
 from materials.models import Lesson
+from materials.paginators import CourseLessonPaginator
 from materials.permission import IsModer, IsOwner
 from materials.serializers.lesson import LessonSerializer
 
@@ -21,6 +22,7 @@ class LessonListAPIView(ListAPIView):
     serializer_class = LessonSerializer
     queryset = Lesson.objects.all()
     permission_classes = [IsAuthenticated, IsModer | IsOwner]
+    pagination_class = CourseLessonPaginator
 
 
 class LessonDetailAPIView(RetrieveAPIView):
