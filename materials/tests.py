@@ -103,3 +103,47 @@ class LessonTestCase(APITestCase):
             status.HTTP_204_NO_CONTENT
         )
 
+
+class SubscriptionTestCase(APITestCase):
+
+    def setUp(self):
+        self.user = User.objects.create(
+            email="test@test.ru",
+            is_staff=True,
+            is_active=True,
+            is_superuser=False,
+        )
+        self.user.set_password("test_user")
+        self.user.save()
+
+        self.course = Course.objects.create(
+            name="Test_course",
+            description="Test_course",
+            owner=self.user
+        )
+
+        self.client.force_authenticate(user=self.user)
+
+    def test_subscribe_to_course(self):
+        """Тест на создание подписки на курс"""
+
+        data = {
+            "user": self.user.id,
+            "course": self.course.id,
+        }
+
+        response = self.client.post(
+            reverse('materials:subscription'),
+            data=data
+        )
+        # print(response.json())
+        #
+        # self.assertEqual(
+        #     response.status_code,
+        #     status.HTTP_200_OK
+        # )
+
+        self.assertEqual(
+            response.json(),
+            {'message': 'Подписка на курс добавлена'}
+        )
