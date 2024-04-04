@@ -43,7 +43,7 @@ class LessonTestCase(APITestCase):
         )
 
     def test_create_lesson(self):
-        """ Тест для создания уроков """
+        """ Тест создания уроков """
 
         data = {
             "name": "test2",
@@ -63,3 +63,43 @@ class LessonTestCase(APITestCase):
         self.assertTrue(
             Lesson.objects.all().exists()
         )
+        # self.assertEqual(
+        #     response.json()['name'],
+        #     data['name']
+        # )
+
+    def test_update_lesson(self):
+        """Тестирование изменения информации об уроке"""
+        lesson = Lesson.objects.create(
+            name='Test_lesson',
+            description='Test_lesson',
+            owner=self.user
+        )
+
+        response = self.client.patch(
+            f'/material/{lesson.id}/update/',
+            {'description': 'change'}
+        )
+
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_200_OK
+        )
+
+    def test_delete_lesson(self):
+        """Тестирование удаления урока"""
+        lesson = Lesson.objects.create(
+            name='Test_lesson',
+            description='Test_lesson',
+            owner=self.user
+        )
+
+        response = self.client.delete(
+            f'/material/{lesson.id}/delete/'
+        )
+
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_204_NO_CONTENT
+        )
+
