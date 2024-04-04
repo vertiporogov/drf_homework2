@@ -24,6 +24,7 @@ class LessonTestCase(APITestCase):
             course=self.course,
             owner=self.user
         )
+
         moderator_group, created = Group.objects.get_or_create(name='moders')
 
         self.user = User.objects.create(email='test@test.com', is_superuser=True)
@@ -39,4 +40,26 @@ class LessonTestCase(APITestCase):
         self.assertEqual(
             response.status_code,
             status.HTTP_200_OK
+        )
+
+    def test_create_lesson(self):
+        """ Тест для создания уроков """
+
+        data = {
+            "name": "test2",
+            "description": "test2",
+            "course": self.course,
+            "owner": self.user
+        }
+
+        response = self.client.post(
+            reverse('materials:create'),
+            data=data
+        )
+        # print(response.json())
+
+        # self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+        self.assertTrue(
+            Lesson.objects.all().exists()
         )

@@ -10,7 +10,7 @@ from materials.serializers.lesson import LessonSerializer
 class LessonCreateAPIView(CreateAPIView):
     serializer_class = LessonSerializer
     # queryset = Lesson.objects.all()
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
         new_course = serializer.save()
@@ -21,7 +21,7 @@ class LessonCreateAPIView(CreateAPIView):
 class LessonListAPIView(ListAPIView):
     serializer_class = LessonSerializer
     queryset = Lesson.objects.all()
-    permission_classes = [IsAuthenticated, IsModer | IsOwner]
+    # permission_classes = [IsAuthenticated, IsModer | IsOwner]
     pagination_class = CourseLessonPaginator
 
 

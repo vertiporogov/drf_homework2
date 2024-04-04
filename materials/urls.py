@@ -15,10 +15,10 @@ router.register('course', CourseViewSet)
 
 urlpatterns = [
     path('', LessonListAPIView.as_view(), name='list'),
-    path('create/', LessonCreateAPIView.as_view()),
-    path('<int:pk>/update/', LessonUpdateAPIView.as_view()),
-    path('<int:pk>/', LessonDetailAPIView.as_view()),
-    path('<int:pk>/delete/', LessonDeleteAPIView.as_view()),
+    path('create/', LessonCreateAPIView.as_view(), name='create'),
+    path('<int:pk>/update/', LessonUpdateAPIView.as_view(), name='update'),
+    path('<int:pk>/', LessonDetailAPIView.as_view(), name='detail'),
+    path('<int:pk>/delete/', LessonDeleteAPIView.as_view(), name='delete'),
 
-    path('subscription/', SubscriptionView.as_view())
+    path('subscription/', SubscriptionView.as_view(), name='subscription')
 ] + router.urls
