@@ -9,4 +9,5 @@ tzdata==2024.1
 django-filter==24.1
 djangorestframework-simplejwt
 coverage
-
+drf-yasg
+setuptools
