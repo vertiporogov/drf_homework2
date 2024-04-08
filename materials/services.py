@@ -1,6 +1,7 @@
 import stripe
+import os
 
-stripe.api_key = 'sk_test_51P2z6wJ11dzhnQNmfSj1VpCwGvCR5asxu36fmMCxwYQKdyHMCl6lsv2ZxUlYHu2malP33cgAz1I5JJj3LUIOx23Z00Vv8JZAV9'
+stripe.api_key = os.getenv('STRIPE_API_KEY')
 
 
 def get_link(amount):
