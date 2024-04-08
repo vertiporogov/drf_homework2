@@ -36,6 +36,10 @@ class LessonDeleteAPIView(DestroyAPIView):
     queryset = Lesson.objects.all()
     permission_classes = [IsAuthenticated, IsOwner]
 
+    # def get_queryset(self):
+    #     queryset = Lesson.objects.all()
+    #     return queryset
+
 
 class LessonUpdateAPIView(UpdateAPIView):
     serializer_class = LessonSerializer

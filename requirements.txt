@@ -11,3 +11,4 @@ djangorestframework-simplejwt
 coverage
 drf-yasg
 setuptools
+stripe
