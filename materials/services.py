@@ -1,16 +1,18 @@
-import stripe
 import os
+
+import stripe
+from django.conf import settings
 
 stripe.api_key = os.getenv('STRIPE_API_KEY')
 
 
 def get_link(amount):
-    product = stripe.Product.create(name="Paid training")
+    product = stripe.Product.create(name="Paid training", currency="rub")
 
     payment_amount = stripe.Price.create(
         currency="rub",
         unit_amount=amount*100,
-        product_data={"name": "Payment"}
+        product_data={"name": "Paid training"}
     )
 
     session = stripe.checkout.Session.create(
