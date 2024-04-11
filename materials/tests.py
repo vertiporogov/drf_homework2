@@ -51,16 +51,16 @@ class LessonTestCase(APITestCase):
 
         data = {
             "name": self.lesson.name,
-            "description": self.lesson.description,
             "course": self.course.id,
-            "owner": self.user.id
+            "owner": self.user.id,
+            "link" : "https://youtube.com"
         }
 
         response = self.client.post(
             '/create/',
             data=data
         )
-        # print(response.json())
+        print(response.json())
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
@@ -74,15 +74,16 @@ class LessonTestCase(APITestCase):
 
     def test_update_lesson(self):
         """Тестирование изменения информации об уроке"""
-
+        self.client.force_authenticate(user=self.user)
         lesson = Lesson.objects.create(
             name='Test_lesson',
             description='Test_lesson',
-            owner=self.user
+            owner=self.user,
+            link="https://youtube.com"
         )
 
         response = self.client.patch(
-            f'/material/{lesson.id}/update/',
+            f'/{lesson.id}/update/',
             {'description': 'change'}
         )
 
@@ -94,14 +95,17 @@ class LessonTestCase(APITestCase):
     def test_delete_lesson(self):
         """Тестирование удаления урока"""
 
+        self.client.force_authenticate(user=self.user)
+
         lesson = Lesson.objects.create(
             name='Test_lesson',
             description='Test_lesson',
-            owner=self.user
+            owner=self.user,
+            link="https://youtube.com"
         )
 
         response = self.client.delete(
-            f'/material/{lesson.id}/delete/'
+            f'/{lesson.id}/delete/'
         )
 
         self.assertEqual(
@@ -114,32 +118,34 @@ class SubscriptionTestCase(APITestCase):
 
     def setUp(self):
         self.user = User.objects.create(
-            email="test@test.ru",
-            is_staff=True,
-            is_active=True,
-            is_superuser=False,
+            email='test3@test3.com', is_superuser=True
         )
-        self.user.set_password("test_user")
-        self.user.save()
 
         self.course = Course.objects.create(
-            name="Test_course",
-            description="Test_course",
-            owner=self.user
+            name='Test3',
+            description='Test3'
         )
 
-        self.client.force_authenticate(user=self.user)
+        self.subscription = Subscription.objects.create(
+            user=self.user,
+            course=self.course
+        )
+
+        moderator_group, created = Group.objects.get_or_create(name='moders')
+
+        self.user = User.objects.create(email='test@test.com', is_superuser=True)
+        self.user.groups.add(moderator_group)
 
     def test_subscribe_to_course(self):
         """Тест на создание подписки на курс"""
-
+        self.client.force_authenticate(user=self.user)
         data = {
             "user": self.user.id,
             "course": self.course.id,
         }
 
         response = self.client.post(
-            reverse('materials:subscription'),
+            '/subscription/',
             data=data
         )
         # print(response.json())

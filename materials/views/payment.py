@@ -13,7 +13,7 @@ class PaymentCreateAPIView(generics.CreateAPIView):
 
     def perform_create(self, serializer):
         new_payment = serializer.save()
-        product_name, payment_link, session_id = get_link(new_payment.course)
+        product_name, payment_link, session_id = get_link(new_payment)
         new_payment.payment_link = payment_link
         new_payment.payment_id = session_id
         new_payment.save()

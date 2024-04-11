@@ -18,12 +18,6 @@ class CourseViewSet(viewsets.ModelViewSet):
         new_course.owner = self.request.user
         new_course.save()
 
-    # Заведите группу модераторов и опишите для нее права работы с любыми уроками и курсами,
-    # но без возможности их удалять и создавать новые. Заложите функционал такой проверки в контроллеры
-
-    # Опишите права доступа для объектов таким образом, чтобы пользователи,
-    # которые не входят в группу модераторов, могли видеть, редактировать и удалять только свои курсы и уроки.
-
     def get_permissions(self):
         if self.action in ['create']:
             self.permission_classes = [IsAuthenticated, ~IsModer]
