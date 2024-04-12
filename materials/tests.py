@@ -141,11 +141,11 @@ class SubscriptionTestCase(APITestCase):
         self.client.force_authenticate(user=self.user)
         data = {
             "user": self.user.id,
-            "course": self.course.id,
+            "course_id": self.course.id,
         }
 
         response = self.client.post(
-            '/subscription/',
+            reverse('materials:subscription'),
             data=data
         )
         # print(response.json())
@@ -155,7 +155,7 @@ class SubscriptionTestCase(APITestCase):
             status.HTTP_200_OK
         )
 
-        # self.assertEqual(
-        #     response.json(),
-        #     {'message': 'Подписка на курс добавлена'}
-        # )
+        self.assertEqual(
+            response.json(),
+            {'message': 'Подписка на курс добавлена'}
+        )
