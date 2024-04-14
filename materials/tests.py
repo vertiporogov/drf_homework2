@@ -149,7 +149,6 @@ class SubscriptionTestCase(APITestCase):
             data=data
         )
         # print(response.json())
-        #
         self.assertEqual(
             response.status_code,
             status.HTTP_200_OK
