@@ -84,11 +84,11 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DATA_BASE_NAME'),
-        'USER': os.getenv('DATA_BASE_USER'),
-        'PASSWORD': os.getenv('DATA_BASE_PASSWORD'),
-        'HOST': os.getenv('DATA_BASE_HOST'),
-        'PORT': '5432',
+        'NAME': os.getenv('POSTGRES_DB'),
+        'USER': os.getenv('POSTGRES_USER'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+        'HOST': os.getenv('POSTGRES_HOST'),
+        'PORT': os.getenv('POSTGRES_PORT'),
 
     }
 }
@@ -162,8 +162,8 @@ SWAGGER_SETTINGS = {
 
 CORS_ALLOW_ALL_ORIGINS = False
 
-CELERY_BROKER_URL = os.getenv('REDIS_URL')
-CELERY_RESULT_BACKEND = os.getenv('REDIS_URL')
+CELERY_BROKER_URL = os.getenv('REDIS_URL_DOCKER')
+CELERY_RESULT_BACKEND = os.getenv('REDIS_URL_DOCKER')
 
 CELERY_TIMEZONE = 'Europe/Moscow'
 
