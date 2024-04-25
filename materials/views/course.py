@@ -5,6 +5,7 @@ from materials.models import Course
 from materials.paginators import CourseLessonPaginator
 from materials.permission import IsModer, IsOwner
 from materials.serializers.course import CourseSerializer
+from materials.tasks import course_update
 
 
 class CourseViewSet(viewsets.ModelViewSet):
@@ -26,3 +27,8 @@ class CourseViewSet(viewsets.ModelViewSet):
         elif self.action in ['update', 'retrieve']:
             self.permission_classes = [IsAuthenticated, IsModer | IsOwner]
         return super().get_permissions()
+
+    def perform_update(self, serializer):
+        update_course = serializer.save()
+        course_update.delay(update_course.id)
+        update_course.save()
